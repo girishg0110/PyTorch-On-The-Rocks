@@ -1,5 +1,6 @@
 import torch
 from torch import nn
+import numpy as np
 
 class ClassicalLayer(nn.Module):
     def __init__(self, input_size, output_size, init_weights, forward_func, grad_func):
@@ -40,4 +41,18 @@ model = nn.Sequential(
     ClassicalLayer(input_dim, output_dim, forward_linear, grad_linear)
 )
 
-model.fit() # Runs successfully
+data_point = torch.tensor(np.ones(10)) # Data point
+target_score = torch.tensor(7). # Target output of network on data_point
+
+opt = torch.optim.Adam(model.parameters(), lr=1e-4)
+crit = torch.nn.CrossEntropyLoss()
+opt.zero_grad()
+predicted_val = model(data_point)
+print("{0} is the initial score. Should be 0.".format(predicted_val))
+
+loss = crit(predicted_val, target_score)
+loss.backward()
+opt.step()
+
+predicted_val = model(data_point)
+print("{0} is the score after one pass. Should be neq 0.".format(predicted_val))
