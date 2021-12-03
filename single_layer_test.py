@@ -16,12 +16,14 @@ def grad_linear(x, weights):
 model = nn.Sequential(
     ClassicalLayer(input_dim, output_dim, forward_linear, grad_linear)
 )
-print(model)
+print(model) 
+for i, p in enumerate(model.parameters()):
+    print(p)
 
 data_point = torch.tensor(np.ones(10)) # Data point
 target_score = torch.tensor(7) # Target output of network on data_point 
 
-opt = torch.optim.Adam(model.parameters(), lr=1e-4)
+opt = torch.optim.SGD(model.parameters(), lr=1e-4)
 crit = torch.nn.CrossEntropyLoss()
 opt.zero_grad()
 predicted_val = model(data_point)
