@@ -19,7 +19,7 @@ model = nn.Sequential(
 print(model)
 
 data_point = torch.tensor(np.ones(10)) # Data point
-target_score = torch.tensor(7) # Target output of network on data_point
+target_score = torch.tensor(7) # Target output of network on data_point 
 
 opt = torch.optim.Adam(model.parameters(), lr=1e-4)
 crit = torch.nn.CrossEntropyLoss()
