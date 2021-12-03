@@ -15,7 +15,7 @@ class ClassicalLayer(nn.Module):
                 ctx.save_for_later(x, weights)
                 result = forward_func(x, weights)
                 result.requires_grad_(True)
-                return result
+                return result 
             
             @staticmethod
             def backward(ctx):
