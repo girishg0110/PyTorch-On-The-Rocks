@@ -26,4 +26,4 @@ class ClassicalLayer(nn.Module):
         self.forward_pass = _TorchFunction
 
     def forward(self, x):
-        return self.forward_pass(x)
+        return self.forward_pass.forward(x, self.weights)
