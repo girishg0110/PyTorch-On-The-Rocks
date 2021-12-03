@@ -7,7 +7,8 @@ class ClassicalLayer(nn.Module):
         super().__init__()
         self.input_size = input_size
         self.output_size = output_size
-        self.weights = init_weights if (init_weights != None) else np.zeros(input_size)
+        weights = init_weights if (init_weights != None) else torch.zeros((output_size, input_size))
+        self.weights = nn.Parameter(weights)
 
         class _TorchFunction(torch.autograd.Function):
             @staticmethod
