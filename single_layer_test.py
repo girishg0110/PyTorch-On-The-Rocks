@@ -8,30 +8,15 @@ input_dim = 10
 output_dim = 1
 
 def forward_linear(x, weights):
-    return (x @ weights.T).item()
+    return (weights @ x.T)
 
 def grad_linear(x, weights):
-    return -weights
+    return weights
 
 model = nn.Sequential(
-    ClassicalLayer(input_dim, output_dim, forward_linear, grad_linear)
+    ClassicalLayer(input_dim, output_dim, forward_linear, grad_linear, init_weights = torch.DoubleTensor([range(9, -1, -1)]))
 )
-print(model) 
-for i, p in enumerate(model.parameters()):
-    print(p)
 
-data_point = torch.tensor(np.ones(10)) # Data point
-target_score = torch.tensor(7) # Target output of network on data_point
-
-opt = torch.optim.SGD(model.parameters(), lr=1e-4)
-crit = torch.nn.CrossEntropyLoss()
-opt.zero_grad()
-predicted_val = model(data_point)
-print("{0} is the initial score. Should be 0.".format(predicted_val))
-
-loss = crit(predicted_val, target_score)
-loss.backward()
-opt.step()
-
-predicted_val = model(data_point)
-print("{0} is the score after one pass. Should be neq 0.".format(predicted_val))
+data_point = torch.DoubleTensor([range(10)]) # Data point
+initial_val = model(data_point)
+print(initial_val)
